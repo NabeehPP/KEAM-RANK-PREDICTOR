@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KEAM Rank Predictor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+   background:
+
+radial-gradient(
+ellipse at top left,
+rgba(81, 35, 229, 0.2),
+transparent 60%
+),
+
+radial-gradient(
+ellipse at bottom right,
+rgba(30, 76, 155, 0.571),
+transparent 60%
+),
+
+#081120;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* Floating Glow */
+body::before{
+    content:'';
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:#f5b887;
+    filter:blur(140px);
+    opacity:.25;
+    top:-100px;
+    left:-100px;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    backdrop-filter:blur(18px);
+    border-radius:28px;
+    padding:40px;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+    position:relative;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.logo-icon{
+    width:18px;
+    height:18px;
+    background:#00d2ff;
+    border-radius:50%;
+    box-shadow:0 0 20px #00d2ff;
+}
+
+.logo h1{
+    color:#fff;
+    font-size:32px;
+    font-weight:700;
+}
+
+.hero{
+    margin-bottom:35px;
+}
+
+.hero h2{
+    color:white;
+    font-size:42px;
+    line-height:1.2;
+    margin-bottom:15px;
+}
+
+.hero p{
+    color:#b8c2d8;
+    font-size:15px;
+    line-height:1.7;
+}
+
+.tab-section{
+    display:flex;
+    gap:15px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+}
+
+.tab{
+    padding:14px 28px;
+    border-radius:16px;
+    border:none;
+    background:rgba(255,255,255,0.08);
+    color:#c7d2ff;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.tab.active{
+    background:linear-gradient(135deg,#3f5efb,#00c6ff);
+    color:white;
+    box-shadow:0 10px 30px rgba(0,198,255,.35);
+}
+
+.form-box{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.input-group{
+    background:rgba(255,255,255,0.06);
+    padding:18px;
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.08);
+    transition:.3s;
+}
+
+.input-group:hover{
+    transform:translateY(-3px);
+    border-color:#3f8cff;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:12px;
+    color:#dce6ff;
+    font-weight:500;
+    font-size:15px;
+}
+
+.input-group input{
+    width:100%;
+    padding:15px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:#0d1a2d;
+    color:white;
+    font-size:17px;
+    font-weight:600;
+}
+
+.input-group input::placeholder{
+    color:#7f8ca8;
+}
+
+.full-width{
+    grid-column:1 / -1;
+}
+
+.predict-btn{
+    width:100%;
+    margin-top:15px;
+    padding:18px;
+    border:none;
+    border-radius:18px;
+    background:
+    linear-gradient(
+    135deg,
+    #00c6ff,
+    #0072ff
+    );
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s ease;
+    box-shadow:
+    0 15px 35px rgba(0,114,255,0.35);
+}
+.predict-btn:hover{
+
+    transform:
+    translateY(-4px)
+    scale(1.01);
+
+    box-shadow:
+    0 0 20px rgba(0,198,255,0.5),
+    0 0 40px rgba(0,198,255,0.4),
+    0 0 80px rgba(0,198,255,0.3);
+
+}
+
+.predict-btn:active{
+
+    transform:
+    scale(0.96);
+
+}
+
+.result-box{
+    margin-top:35px;
+    background:linear-gradient(135deg,rgba(0,198,255,.12),rgba(63,94,251,.12));
+    border:1px solid rgba(255,255,255,.1);
+    padding:28px;
+    border-radius:24px;
+
+}
+
+.result-title{
+    color:white;
+    font-size:22px;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
+
+.result-card{
+    background:rgba(255,255,255,.06);
+    padding:20px;
+    border-radius:18px;
+}
+
+.result-card h4{
+    color:#a8b6d6;
+    font-size:14px;
+    margin-bottom:10px;
+    font-weight:500;
+}
+
+.result-card p{
+    color:white;
+    font-size:28px;
+    font-weight:700;
+}
+
+.footer{
+    margin-top:25px;
+    text-align:center;
+    color:hsl(74, 100%, 75%);
+    font-size:17px;
+}
+
+@media(max-width:700px){
+
+    .container{
+        padding:25px;
+    }
+
+    .hero h2{
+        font-size:30px;
+    }
+
+    .form-box{
+        grid-template-columns:1fr;
+    }
+
+   #error-message{
+    color:#ff5e7e;
+    font-size:16px;
+    margin-top:18px;
+    text-align:center;
+    font-weight:600;
+    width:100%;
+    display:block;
+    }
+    .full-width{
+    width:100%;
+    text-align:center;
+    color: #ff5e7e;
+    }
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <div class="hero">
+        <h2>KEAM Rank Predictor 2026</h2>
+        <p>
+            Predict your KEAM engineering rank instantly using your Plus Two marks and KEAM score.
+            <break>
+           <p> Based on previous data and advanced algorithms.</p>
+        </p>
+    </div>
+
+    <div class="tab-section">
+        <button class="tab active" id="cbseBtn">CBSE </button>
+        <button class="tab" id="stateBtn">STATE BOARD </button> 
+    </div>
+
+    <div class="form-box">
+
+        <div class="input-group">
+            <label>Plus Two Maths Marks</label>
+            <input type="number" id="maths" placeholder="Enter Maths Marks">
+        </div>
+
+        <div class="input-group">
+            <label>Plus Two Physics Marks</label>
+            <input type="number" id="physics" placeholder="Enter Physics Marks">
+        </div>
+
+        <div class="input-group">
+            <label>Plus Two Chemistry Marks</label>
+            <input type="number" id="chemistry" placeholder="Enter Chemistry Marks">
+        </div>
+
+        <div class="input-group">
+            <label>KEAM Normalised Score (Out of 300)</label>
+            <input type="number" id="keam" placeholder="Enter KEAM Score">
+        </div>
+
+        <div class="full-width" style="text-align:center; color:#ff5e7e">
+            <button class="predict-btn" onclick="predictRank()">Predict My Rank</button>
+            <div id="error-message"></div>
+        </div>
+        
+    </div>
+
+    <div class="result-box">
+
+        <div class="result-title">Prediction Result</div>
+
+        <div class="result-grid">
+
+           <div class="result-grid">
+
+    <div class="result-card">
+        <h4>Weighted Score(BOARD)</h4>
+
+        <p id="weighted-score">0</p>
+    </div>
+
+
+
+    <div class="result-card">
+        <h4>Final KEAM Score</h4>
+
+        <p id="final-score">0</p>
+    </div>
+
+
+
+    <div class="result-card">
+        <h4>Expected Rank Range</h4>
+
+        <p id="rank-range">---</p>
+    </div>
+
+</div>
+
+        </div>
+
+    </div>
+    <div class="footer">
+        Created by NABEEH
+</div>
+<script src="script.js"></script>
+</body>
+</html>
