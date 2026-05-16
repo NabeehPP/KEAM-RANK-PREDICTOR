@@ -19,10 +19,7 @@ document.getElementById("cbseBtn")
 
 
     document.querySelector(".result-box")
-
-    .style.animation = "fadeIn 0.6s ease forwards";
-
-
+    .classList.add("show");  
 
 };
 
@@ -45,10 +42,11 @@ document.getElementById("stateBtn")
 
 };
 
-
-
+const resultBox = document.querySelector(".result-box");
 
 function predictRank(){
+
+    resultBox.classList.add("show");
 
     let maths =
     Number(document.getElementById("maths").value);
@@ -137,6 +135,7 @@ function predictRank(){
 
     boardScore.toFixed(2);
 
+    
     let rank = "";
 
 
@@ -218,6 +217,13 @@ else{
     rank = "Above 5000";
 
 }
-  
-    document.getElementById("rank-range").innerHTML = rank;
+ document.getElementById("rank-range").innerText = rank;
+    
 }
+
+
+
+
+
+
+
