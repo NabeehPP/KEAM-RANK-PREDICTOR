@@ -212,11 +212,74 @@ else if(finalScore >= 410){
 
 }
 
-else{
-
-    rank = "Above 5000";
-
+if(finalScore >= 400){
+    rank = "5001 - 6000";
 }
+
+else if(finalScore >= 390){
+    rank = "6001 - 7000";
+}
+
+else if(finalScore >= 380){
+    rank = "7001 - 8000";
+}
+
+else if(finalScore >= 370){
+    rank = "8001 - 10000";
+}
+
+else if(finalScore >= 360){
+    rank = "10000 - 12000";
+}
+
+else if(finalScore >= 350){
+    rank = "12000 - 14000";
+}
+
+else if(finalScore >= 340){
+    rank = "14000 - 16000";
+}
+
+else if(finalScore >= 330){
+    rank = "16000 - 18000";
+}
+
+else if(finalScore >= 320){
+    rank = "18000 - 20000";
+}
+
+else if(finalScore >= 300){
+    rank = "20000 - 25000";
+}
+
+else if(finalScore >= 290){
+    rank = "25000 - 30000";
+}
+
+else if(finalScore >= 280){
+    rank = "30000 - 35000";
+}
+
+else if(finalScore >= 270){
+    rank = "35000 - 40000";
+}
+
+else if(finalScore >= 250){
+    rank = "40000 - 45000";
+}
+
+else if(finalScore >= 240){
+    rank = "45000 - 50000";
+}
+
+else if(finalScore >= 230){
+    rank = "50000 - 60000";
+}
+
+else{
+    rank = "Above 60000";
+}
+
  document.getElementById("rank-range").innerText = rank;
     
 }
